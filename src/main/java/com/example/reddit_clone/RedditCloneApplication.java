@@ -1,13 +1,13 @@
-package com.example.demo;
+package com.example.reddit_clone;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class DemoApplication {
+public class RedditCloneApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(RedditCloneApplication.class, args);
 	}
 
 }
