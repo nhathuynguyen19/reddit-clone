@@ -11,6 +11,8 @@ import com.example.reddit_clone.dto.RegisterRequest;
 import com.example.reddit_clone.service.AuthService;
 
 import lombok.AllArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 @RestController
 @RequestMapping("api/auth")
@@ -23,4 +25,11 @@ public class AuthController {
         authService.signup(registerRequest);
         return new ResponseEntity<>("User Registration Successful", HttpStatus.OK);
     }
+
+    @GetMapping("/accountVerification/{token}")
+    public ResponseEntity<String> verifyAccount(@PathVariable String token) {
+        authService.verifyAccount(token);
+        return new ResponseEntity<>("Account Activated Successfully", HttpStatus.OK);
+    }
+
 }
