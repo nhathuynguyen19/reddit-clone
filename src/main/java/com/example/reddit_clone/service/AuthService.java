@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.reddit_clone.dto.RegisterRequest;
+import com.example.reddit_clone.model.NotificationEmail;
 import com.example.reddit_clone.model.User;
 import com.example.reddit_clone.model.VerificationToken;
 import com.example.reddit_clone.repository.UserRepository;
@@ -18,6 +19,8 @@ import lombok.AllArgsConstructor;
 @Service
 @AllArgsConstructor
 public class AuthService {
+
+    private final MailService mailService;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final VerificationTokenRepository verificationTokenRepository;
@@ -33,7 +36,10 @@ public class AuthService {
         userRepository.save(user);
 
         String token = generateVerificationToken(user);
-        
+        mailService.sendMail(new NotificationEmail("Please Activate your Account",
+                user.getEmail(),
+                "Thank you for signing up to Spring Reddit, please click on the below url to activate your account : http://localhost:8081/api/auth/accountVerification/"
+                        + token));
     }
 
     private String generateVerificationToken(User user) {
@@ -42,6 +48,6 @@ public class AuthService {
         verificationToken.setToken(token);
         verificationToken.setUser(user);
         verificationTokenRepository.save(verificationToken);
-        return token;   
+        return token;
     }
 }
